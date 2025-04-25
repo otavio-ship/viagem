@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tempo de Viagem</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Tempo de Viagem</h1>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="distancia">Distância (km):</label>
+                <input type="number" id="distancia" name="distancia"
+                       step="0.1" min="0.1" required
+                       placeholder="Digite a distância em quilômetros">
+            </div>
+
+            <div class="form-group">
+                <label for="velocidade">Velocidade Média (km/h):</label>
+                <input type="number" id="velocidade" name="velocidade"
+                       step="1" min="1" required
+                       placeholder="Digite a velocidade média">
+            </div>
+
+            <button type="submit" class="btn-calcular">Calcular Tempo</button>
+        </form>
+
+        {% if erro %}
+            <div class="alert erro">
+                {{ erro }}
+            </div>
+        {% endif %}
+
+        {% if horas is defined %}
+            <div class="resultado">
+                <h2>Resultado</h2>
+                <p>Para percorrer <span class="destaque">{{ distancia }} km</span></p>
+                <p>a <span class="destaque">{{ velocidade }} km/h</span></p>
+                <p class="tempo-resultado">Tempo estimado:</p>
+                <p class="tempo-valor">
+                    {% if horas > 0 %}
+                        {{ horas }} hora{% if horas > 1 %}s{% endif %}
+                    {% endif %}
+                    {% if minutos > 0 %}
+                        e {{ minutos }} minuto{% if minutos > 1 %}s{% endif %}
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
